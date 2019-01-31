@@ -30,7 +30,7 @@
 ## set this for for singular procedure files, or database files:
 #  SINGLE   : single file for each procedure
 #  DB       : procedures in files for each database
-filetype=DB
+filetype=SINGLE
 
 datetime=$(date +%Y%m%d_%H%M%S)
 dir=memsql_procedure_dump_$datetime 
@@ -47,7 +47,7 @@ do
    if [[ $db = "memsql" ]] || [[ $db = "cluster" ]] ; then 
       continue
    else
-      for sp_name in `memsql -N $@ $db -Bse "show procedures" | awk '{print $1}'`
+      for sp_name in `memsql -N $@ $db -Bse "show procedures" 2>&1 | grep -v "Using a password on the command line interface can be insecure." | awk '{print $1}'`
       do
          if [[ $filetype = "DB" ]] ; then
             fn=$db
@@ -60,7 +60,7 @@ do
          fi
          printf "backing up $db.$sp_name\n"
          printf "/*\ndatabase : $db\nprocedure: $sp_name\nretrieved: $datetime\n*/\nDELIMITER //\n" >> ./$dir/$fn\.sql
-         memsql $@ -D $db -ANe "show create procedure $sp_name\G" >  ./$dir/$fn\.tmp
+         memsql $@ -D $db -ANe "show create procedure $sp_name\G" 2>&1 | grep -v "Using a password on the command line interface can be insecure." >  ./$dir/$fn\.tmp
          
          # Remove Top 2 Lines
          LINECOUNT=`wc -l < ./$dir/$fn\.tmp`
