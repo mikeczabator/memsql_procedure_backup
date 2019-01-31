@@ -28,14 +28,14 @@
 datetime=$(date +%Y%m%d_%H%M%S)
 dir=memsql_procedure_dump_$datetime	
 
-if [[ ! -e $dir ]]; then
-    mkdir $dir
-elif [[ ! -d $dir ]]; then
-    echo "$dir already exists but is not a directory" 1>&2
-fi
-
 for db in `memsql -N $@ -e "show databases"` 
 do
+   if [[ ! -e $dir ]]; then
+    mkdir $dir
+   elif [[ ! -d $dir ]]; then
+       echo "$dir already exists but is not a directory" 1>&2
+   fi
+
 	if [ $db = "memsql" ] || [ $db = "cluster" ] ; then 
 		continue
 	else
@@ -61,4 +61,7 @@ do
 	done
 	fi
 done
-printf  "\nbacked up $count procedures in ./$dir\n"
+
+if [[ $count > 0 ]]; then
+   printf  "\nbacked up $count procedures in ./$dir\n"
+fi 
