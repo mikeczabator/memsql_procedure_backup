@@ -1,5 +1,5 @@
 # memsql_procedure_backup
-script runs a `SHOW CREATE PROCEDURE` on all procedures on all databases.  Procedures are saved with proper delimiters.  
+script runs a `SHOW CREATE PROCEDURE` on all procedures on all databases that user has access to.  Procedures are saved with proper delimiters.  
 ### use:
 `backup_memsql_procedures.sh [memsql connection string ex. -h127.0.0.1 -uroot -pPassword -P3306]`
 
