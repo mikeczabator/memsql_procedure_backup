@@ -1,10 +1,11 @@
 # memsql_procedure_backup
 script runs a 'SHOW CREATE PROCEDURE' on all procedures on all databases.  Procedures are saved with proper delimiters.  
-use:
-backup_memsql_procedures.sh [memsql connection string ex. -h127.0.0.1 -uroot -pPassword -P3306]
+### use:
+`backup_memsql_procedures.sh [memsql connection string ex. -h127.0.0.1 -uroot -pPassword -P3306]`
 
+
+### example: 
 ```
-example: 
 [vagrant@localhost ~]$ ./save_procedures_v2.sh -uroot
 backing up energy.get_memsql_status
 backing up energy.testing_DS
