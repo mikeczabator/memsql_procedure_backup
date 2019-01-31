@@ -1,5 +1,17 @@
 # memsql_procedure_backup
 script runs a `SHOW CREATE PROCEDURE` on all procedures on all databases that user has access to.  Procedures are saved with proper delimiters.  
+
+### config: 
+Set `filetype` parameter in shell file to determine output type
+- SINGLE  : creates a single file for each procedure
+- DB      : creates a single file for each database
+```
+## set this for for singular procedure files, or database files:
+#  SINGLE   : single file for each procedure
+#  DB       : procedures in files for each database
+filetype=DB
+```
+
 ### use:
 `backup_memsql_procedures.sh [memsql connection string ex. -h127.0.0.1 -uroot -pPassword -P3306]`
 
