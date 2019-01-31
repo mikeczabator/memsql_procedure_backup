@@ -57,7 +57,7 @@ do
          
          printf "//\nDELIMITER ;\n\n" >> ./$dir/$db\.sql
          count=$(($count+1))
-
+         rm ./$dir/*.tmp
 	done
 	fi
 done
