@@ -30,8 +30,26 @@
 ## set this for for singular procedure files, or database files:
 #  SINGLE   : single file for each procedure
 #  DB       : procedures in files for each database
-filetype=SINGLE
+unset $filetype
+clear
 
+# Added functions to prompt for backup type
+function BACKUP_TYPE()
+{  
+   if [ -z "$filetype" ];
+   then 
+      echo "Please set the backup type you would like."
+      echo "Enter SINGLE to backup procedures in single files"
+      echo "-or-"
+      echo "enter DB to backup procedures for each database"
+      read filetype
+      export filetype=$filetype
+   fi
+}
+
+# Added function to encapsulate backup work
+function BACKITUP()
+{
 datetime=$(date +%Y%m%d_%H%M%S)
 dir=memsql_procedure_dump_$datetime 
 
@@ -82,3 +100,16 @@ done
 if [[ $count > 0 ]]; then
    printf  "\nbacked up $count procedures in ./$dir\n"
 fi 
+}
+
+# Call to the functions
+function RUN()
+{
+   BACKUP_TYPE
+   BACKITUP
+}
+
+# let's go!
+RUN
+
+
