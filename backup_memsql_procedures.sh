@@ -9,7 +9,7 @@
    #  DESCRIPTION: Exports all MemSQL stored procedures 
    #      OPTIONS:  
    # REQUIREMENTS: MemSQL
-   #      AUTHOR: Mike Czabator (mczabator@memsql.com)
+   #       AUTHOR: Mike Czabator (mczabator@memsql.com)
    #      CREATED: 09.18.2018
    #      UPDATED: 01.31.2019      
    #      VERSION: 2.2
