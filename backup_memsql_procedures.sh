@@ -9,10 +9,12 @@
    #  DESCRIPTION: Exports all MemSQL stored procedures 
    #      OPTIONS:  
    # REQUIREMENTS: MemSQL
-   #       AUTHOR: Mike Czabator (mczabator@memsql.com)
+   #      AUTHOR: Mike Czabator (mczabator@memsql.com)
    #      CREATED: 09.18.2018
    #      UPDATED: 01.31.2019      
-   #      VERSION: 2.1
+   #      VERSION: 2.2
+   #    CHANGELOG: 2019-04-18  :  v2.2   : added perl regex to change CREATE PROCEDURE to CREATE OR REPLACE PROCEDURE
+   # 
    #      EUL    :   THIS CODE IS OFFERED ON AN “AS-IS” BASIS AND NO WARRANTY, EITHER EXPRESSED OR IMPLIED, IS GIVEN. 
    #           THE AUTHOR EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED.
    #           YOU ASSUME ALL RISK ASSOCIATED WITH THE QUALITY, PERFORMANCE, INSTALLATION AND USE OF THE SOFTWARE INCLUDING, 
@@ -89,6 +91,10 @@ do
          LINECOUNT=`wc -l < ./$dir/$fn\.2.tmp`
          (( LINECOUNT -= 2 ))
          head -n ${LINECOUNT} < ./$dir/$fn\.2.tmp >> ./$dir/$fn\.sql
+
+         # use perl regex to change CREATE PROCEDURE to CREATE OR REPLACE PROCEDURE        
+         perl -i -p -e 's/^CREATE PROCEDURE $sp_name/CREATE OR REPLACE PROCEDURE /;' ./$dir/$fn\.sql
+
          
          printf "//\nDELIMITER ;\n\n" >> ./$dir/$fn\.sql
          count=$(($count+1))
@@ -111,5 +117,3 @@ function RUN()
 
 # let's go!
 RUN
-
-
