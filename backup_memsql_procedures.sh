@@ -41,9 +41,9 @@ function BACKUP_TYPE()
    if [ -z "$filetype" ];
    then 
       echo "Please set the backup type you would like."
-      echo "Enter SINGLE to backup procedures in single files"
+      echo "Enter SINGLE to backup procedures in single file for each database"
       echo "-or-"
-      echo "enter DB to backup procedures for each database"
+      echo "enter DB to backup procedures in individual files"
       read filetype
       export filetype=$filetype
    fi
