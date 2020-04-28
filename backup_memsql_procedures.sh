@@ -23,10 +23,6 @@
    #           YOU ARE SOLELY RESPONSIBLE FOR DETERMINING THE APPROPRIATENESS OF USE THE SOFTWARE AND ASSUME ALL RISKS ASSOCIATED WITH ITS USE.
    #
    #
-   #
-   #
-   #
-   #
    #===============================================================================================================
 
 ## set this for for singular procedure files, or database files:
@@ -93,7 +89,7 @@ do
          head -n ${LINECOUNT} < ./$dir/$fn\.2.tmp >> ./$dir/$fn\.sql
 
          # use perl regex to change CREATE PROCEDURE to CREATE OR REPLACE PROCEDURE        
-         perl -i -p -e 's/^CREATE PROCEDURE $sp_name/CREATE OR REPLACE PROCEDURE /;' ./$dir/$fn\.sql
+         perl -i -p -e "s/^CREATE PROCEDURE \`$sp_name\`/CREATE OR REPLACE PROCEDURE \`$sp_name\`/;" ./$dir/$fn\.sql
 
          
          printf "//\nDELIMITER ;\n\n" >> ./$dir/$fn\.sql
