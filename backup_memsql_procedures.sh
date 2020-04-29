@@ -90,7 +90,8 @@ do
             (( LINECOUNT -= 2 ))
             tail -n ${LINECOUNT} < ./$dir/$fn\.tmp > ./$dir/$fn\.2.tmp
 
-         elif [[ ${memsql_version:0:1} -ge 7 ]]; then
+         elif [[ ${memsql_version:0:1} -ge 7 ]]; 
+         then
             # Remove Top 3 Lines for MemSQL version 7.0 and higher
             # MemSQL 7.0+ started adding the SQL_MODE to the SHOW CREATE PROCEDURE output, so we have to remove that from the output
             LINECOUNT=`wc -l < ./$dir/$fn\.tmp`
