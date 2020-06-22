@@ -11,11 +11,12 @@
    # REQUIREMENTS: MemSQL
    #       AUTHOR: Mike Czabator (mczabator@memsql.com)
    #      CREATED: 09.18.2018
-   #      UPDATED: 04.29.2020      
+   #      UPDATED: 06.22.2020      
    #      VERSION: 2.3
    #    CHANGELOG: 2019-04-18  :  v2.2   : added perl regex to change CREATE PROCEDURE to CREATE OR REPLACE PROCEDURE
    #               2020-04-29  :  v2.3   : changed the way the perl regex looked for CREATE PROCEDURE to make sure it doesn't change other strings.
    #                                     : MemSQL 7.0 added SQL_MODE to the SHOW PROCEDURE output.  added support to remove that line.
+   #               2020-06-22  :         : Fixed bug preventing access from remote server to MemSQL
    # 
    #      EUL    :   THIS CODE IS OFFERED ON AN “AS-IS” BASIS AND NO WARRANTY, EITHER EXPRESSED OR IMPLIED, IS GIVEN. 
    #           THE AUTHOR EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED.
@@ -53,7 +54,7 @@ function BACKITUP()
 datetime=$(date +%Y%m%d_%H%M%S)
 dir=memsql_procedure_dump_$datetime 
 
-memsql_version=`memsql -s -N -e "SELECT @@MEMSQL_VERSION"`
+memsql_version=`memsql $@ -s -N -e "SELECT @@MEMSQL_VERSION"`
 echo MemSQL version $memsql_version found.
 
 for db in `memsql -N $@ -e "show databases"` 
@@ -131,8 +132,8 @@ fi
 function RUN()
 {
    BACKUP_TYPE
-   BACKITUP
+   BACKITUP $@
 }
 
 # let's go!
-RUN
+RUN $@
